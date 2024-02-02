@@ -1,0 +1,19 @@
+# Arquivos e diretórios gerados pelo Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Banco de dados SQLite
+db.sqlite3
+
+# Diretórios de mídia e arquivos estáticos
+media/
+static/
+
+# Virtual environment
+venv/
+.env
+
+#migrações
+migrations/

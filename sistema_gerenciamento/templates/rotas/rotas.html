@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>ST-UFPI Rotas</title>
+
+    <style>
+        .container {
+            padding-top: 50px;
+            font-size:14px;
+        }
+    </style>
+
+</head>
+<body >
+    <nav class="navbar bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="link-light link-offset-2 link-underline link-underline-opacity-0" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <i class="fa-solid fa-bars"></i> ST-UFPI
+            </a>
+
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ user.username }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'home' %}"><i class="{% url 'home' %}"></i> Início</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'veiculos' %}"><i class="fa-solid fa-car"></i> Veículos</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'motoristas' %}"><i class="fa-regular fa-id-card"></i> Motoristas</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'rotas' %}"><i class="fa-solid fa-map"></i> Rotas</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'demandas' %}"><i class="fa-solid fa-truck-arrow-right"></i> Demandas de transporte</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'combustivel' %}"><i class="fa-solid fa-gas-pump"></i> Combustível</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'viagens' %}"><i class="fa-solid fa-route"></i> Viagens</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'logout_user' %}"> Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ user.username }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'logout_user' %}">Sair</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <section class="container">
+        <div class="card w-80">
+            <div class="card-body">
+
+                <div>
+                    <h1 class="card-title">Rotas</h1>
+                </div>
+                <br>
+                {% if user_permissions.view_cadastrar_rota %}
+                    <a class="btn btn-primary p-2" href="{% url 'cadastrar_rota' %}" role="button">Adicionar rotas</a>
+                {% endif %}
+                <div>
+                    <br>
+                    <h4>Rotas cadastradas</h4>
+                    <br>
+                </div>
+
+                <div>
+                    {% for rota in rotas_list %}
+                    <div class="card">
+                        <h6 class="card-header">{{ rota.nome }} - {{ rota.turno }}</h6>
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text">Saída: {{rota.horario_saida}} / Chegada: {{rota.horario_retorno}}</p>
+                            <div class="d-flex">
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ rota.id }}">Detalhes</a>
+
+                                {% if user_permissions.view_editar_rota %}
+                                    <a href="{% url 'editar_rota' rota.id %}" class="link-dark ms-auto"><i class="fa-solid fa-pen-to-square fa-2x me-4"></i></a>
+                                {% endif %}
+
+                                {% if user_permissions.view_deletar_rota %}
+                                    <i class="fa-solid fa-trash fa-2x me-4" data-bs-toggle="modal" data-bs-target="#deletar{{ rota.id }}"></i>
+                                {% endif %}
+
+                                <div class="modal fade" id="deletar{{ rota.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="aaa">Excluir rota</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                                <div class="modal-body">
+                                                    Tem certeza que deseja excluir a rota '{{ rota.nome }} - {{ rota.turno }}'?
+                                                </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <!-- Utilize um formulário para enviar a solicitação de exclusão -->
+                                                <form method="post" action="{% url 'deletar_rota' rota.id %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-danger">Deletar</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal fade" id="exampleModal{{ rota.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{ rota.nome }} - {{ rota.turno }}</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Saída: {{rota.horario_saida}} / Chegada: {{rota.horario_retorno}}</p>
+                                            <p>Motorista: {{rota.motorista.nome}}</p>
+                                            <p>Veículo: {{rota.veiculo.modelo}}</p>
+                                            <p>Paradas:
+                                                <ol>
+                                                    {% for parada in rota.get_paradas_list %}
+                                                        <li>{{ parada }}</li>
+                                                    {% endfor %}
+                                                </ol>
+                                            </p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

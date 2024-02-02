@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>ST-UFPI Motoristas</title>
+
+    <style>
+        .container {
+            padding-top: 50px;
+        }
+    </style>
+
+</head>
+<body>
+
+   <nav class="navbar bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="link-light link-offset-2 link-underline link-underline-opacity-0" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <i class="fa-solid fa-bars"></i> ST-UFPI
+            </a>
+
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ user.username }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'home' %}"><i class="{% url 'home' %}"></i> Início</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'veiculos' %}"><i class="fa-solid fa-car"></i> Veículos</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'motoristas' %}"><i class="fa-regular fa-id-card"></i> Motoristas</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'rotas' %}"><i class="fa-solid fa-map"></i> Rotas</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'demandas' %}"><i class="fa-solid fa-truck-arrow-right"></i> Demandas de transporte</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'combustivel' %}"><i class="fa-solid fa-gas-pump"></i> Combustível</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'viagens' %}"><i class="fa-solid fa-route"></i> Viagens</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'logout_user' %}"> Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ user.username }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'logout_user' %}">Sair</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+   <section class="container">
+        <div class="card w-80">
+            <div class="card-body">
+
+                <div>
+                    <h1 class="card-title">Motoristas</h1>
+                    <br>
+                    {% if user_permissions.view_cadastrar_motorista%}
+                        <a class="btn btn-primary p-2" href="{% url 'cadastrar_motorista' %}" role="button">Adicionar Motorista</a>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <br>
+                    <div class="dropdown end">
+                        <h4>Motoristas cadastrados</h4>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Filtrar
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="?ordenacao=asc">Data de cadastro <i class="fa-solid fa-arrow-up"></i></a></li>
+                            <li><a class="dropdown-item" href="?ordenacao=desc">Data de cadastro <i class="fa-solid fa-arrow-down"></i></a></li>
+                        </ul>
+
+                    </div>
+                    <br>
+
+                    <table class="table text-center table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Telefone</th>
+                                <th scope="col">Data de cadastro</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for motorista in motoristas_list %}
+                                <tr>
+                                    <td>{{ motorista.nome }}</td>
+                                    <td>{{ motorista.telefone }}</td>
+                                    <td>{{ motorista.data_cadastro|date:'d/m/Y' }}</td>
+                                    <td>
+                                        <i class="fa-solid fa-eye" data-bs-toggle="modal" data-bs-target="#exampleModal{{ motorista.id }}"></i>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal{{ motorista.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Dados do motorista</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p><strong>Nome:</strong> {{ motorista.nome }}</p>
+                                                        <p><strong>Telefone:</strong> {{ motorista.telefone }}</p>
+                                                        <p><strong>Data de Cadastro:</strong> {{ motorista.data_cadastro|date:'d/m/Y' }}</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if user_permissions.view_editar_motorista %}
+                                            <a href="{% url 'editar_motorista' motorista.id %}" class="link-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        {% endif %}
+
+                                       {% if user_permissions.view_deletar_motorista %}
+                                            <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deletar{{ motorista.id }}"></i>
+                                        {% endif %}
+                                        <!-- Modal -->
+                                       <div class="modal fade" id="deletar{{ motorista.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="aaa">Excluir Motorista {{motorista.nome}}</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Tem certeza que deseja excluir o motorista '{{ motorista.nome }}'?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                                                        <!-- Utilize um formulário para enviar a solicitação de exclusão -->
+                                                        <form method="post" action="{% url 'deletar_motorista' motorista.id %} ">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-danger">Deletar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       </div>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+   </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

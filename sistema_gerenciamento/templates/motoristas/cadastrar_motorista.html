@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>ST-UFPI Cadastrar motorista</title>
+
+    <style>
+        .container {
+            padding-top: 50px;
+            font-size:14px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="link-light link-offset-2 link-underline link-underline-opacity-0" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <i class="fa-solid fa-bars"></i> ST-UFPI
+            </a>
+
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ user.username }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'home' %}"><i class="{% url 'home' %}"></i> Início</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'veiculos' %}"><i class="fa-solid fa-car"></i> Veículos</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'motoristas' %}"><i class="fa-regular fa-id-card"></i> Motoristas</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'rotas' %}"><i class="fa-solid fa-map"></i> Rotas</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'demandas' %}"><i class="fa-solid fa-truck-arrow-right"></i> Demandas de transporte</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'combustivel' %}"><i class="fa-solid fa-gas-pump"></i> Combustível</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'viagens' %}"><i class="fa-solid fa-route"></i> Viagens</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'logout_user' %}"> Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ user.username }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'logout_user' %}">Sair</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <section class="container">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-body text-center fs-6">
+                <h3 class="card-title">Cadastrar motorista</h3>
+                <br>
+                <form method="post" autocomplete="off" action="{% url 'cadastrar_motorista' %}">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3 row">
+                        <label for="{{ field.id_for_label }}" class="col-sm-4 col-form-label fw-bold">{{ field.label }}</label>
+                        <div class="col-sm-8">
+                            {{ field }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="mb-3 row">
+                        <div class="col-sm-8 offset-sm-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Cadastrar</button>
+                        </div>
+                    </div>
+                </form>
+
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Erro! Corrija os seguintes problemas:</strong>
+                        <ul>
+                            {% for field, error_list in form.errors.items %}
+                                {% for error in error_list %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+</body>
+</html>
