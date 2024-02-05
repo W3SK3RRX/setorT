@@ -1,7 +1,9 @@
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
+    PasswordResetCompleteView
 from django.urls import path
 from . import views
 from .views import (editar_veiculo, deletar_veiculo, editar_manutencao, deletar_manutencao, view_comprovante,
-                    view_comprovante_checklist, editar_checklist, deletar_checklist, editar_motorista, deletar_motorista,
+                    view_comprovante_checklist, editar_checklist, deletar_checklist, visualizar_documentos, editar_motorista, deletar_motorista,
                     view_comprovante_abastecimento, editar_abastecimento, deletar_abastecimento, editar_rota, deletar_rota,
                     editar_demanda, deletar_demanda, editar_viagem, deletar_viagem)
 
@@ -11,6 +13,13 @@ urlpatterns = [
     path('', views.user_login, name='user_login'),
     path('logout_user/', views.user_logout, name='logout_user'),
     path('home/', views.home, name='home'),
+
+
+    #recuperação de senha
+    path('auth/password_reset/', PasswordResetView.as_view(), name='password_reset'),
+    path('auth/password_reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('auth/reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('auth/reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
 
     #Veículos
@@ -40,6 +49,7 @@ urlpatterns = [
     #Motoristas
     path('home/motoristas', views.motoristas, name='motoristas'),
     path('home/motoristas/cadastrar_motorista', views.cadastrar_motorista, name='cadastrar_motorista'),
+    path('home/visualizar_documentos/<int:motorista_id>/', visualizar_documentos, name='visualizar_documentos'),
     path('home/motoristas/editar_motorista/<int:motorista_id>', editar_motorista, name='editar_motorista'),
     path('home/motoristas/deletar_motorista/<int:motorista_id>', deletar_motorista, name='deletar_motorista'),
 
@@ -64,6 +74,7 @@ urlpatterns = [
     path('home/demandas/cadastrar_demanda', views.cadastrar_demanda, name='cadastrar_demanda'),
     path('home/demandas/editar_demanda/<int:demanda_id>', editar_demanda, name="editar_demanda"),
     path('home/demandas/deletar/<int:demanda_id>', deletar_demanda, name="deletar_demanda"),
+
 
     #viagens
     path('home/viagens', views.viagens, name='viagens'),

@@ -16,9 +16,10 @@
 </head>
 <body>
     <nav class="navbar bg-dark" data-bs-theme="dark">
-        <div class="container-fluid">
+       <div class="container-fluid">
+
             <a class="link-light link-offset-2 link-underline link-underline-opacity-0" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                <i class="fa-solid fa-bars"></i> ST-UFPI
+                <i class="fa-solid fa-bars"></i>
             </a>
 
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -32,13 +33,21 @@
                             <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'home' %}"><i class="{% url 'home' %}"></i> Início</a></li>
                             <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'veiculos' %}"><i class="fa-solid fa-car"></i> Veículos</a></li>
                             <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'motoristas' %}"><i class="fa-regular fa-id-card"></i> Motoristas</a></li>
-                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="#"><i class="fa-solid fa-gas-pump"></i> Combustível</a></li>
-                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="#"><i class="fa-solid fa-route"></i> Viagens</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'rotas' %}"><i class="fa-solid fa-map"></i> Rotas</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'demandas' %}"><i class="fa-solid fa-truck-arrow-right"></i> Demandas de transporte</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'combustivel' %}"><i class="fa-solid fa-gas-pump"></i> Combustível</a></li>
+                            <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'viagens' %}"><i class="fa-solid fa-route"></i> Viagens</a></li>
                             <li class="list-group-item"><a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{% url 'logout_user' %}"> Sair</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
+
+           <div>
+               <a href="{% url 'checklists' %}" class="link-light link-offset-2 link-underline link-underline-opacity-0 ms-auto">
+                 <i class="fa-solid fa-arrow-left"></i> Voltar
+               </a>
+           </div>
 
             <div class="dropdown">
                 <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

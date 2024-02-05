@@ -17,9 +17,10 @@
 <body>
 
    <nav class="navbar bg-dark" data-bs-theme="dark">
-        <div class="container-fluid">
+       <div class="container-fluid">
+
             <a class="link-light link-offset-2 link-underline link-underline-opacity-0" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                <i class="fa-solid fa-bars"></i> ST-UFPI
+                <i class="fa-solid fa-bars"></i>
             </a>
 
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -42,6 +43,12 @@
                     </div>
                 </div>
             </div>
+
+           <div>
+               <a href="{% url 'home' %}" class="link-light link-offset-2 link-underline link-underline-opacity-0 ms-auto">
+                 <i class="fa-solid fa-arrow-left"></i> Voltar
+               </a>
+           </div>
 
             <div class="dropdown">
                 <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -88,6 +95,7 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Telefone</th>
                                 <th scope="col">Data de cadastro</th>
+                                <th scope="col">Documentos</th>
                                 <th scope="col">Ações</th>
                             </tr>
                         </thead>
@@ -97,6 +105,13 @@
                                     <td>{{ motorista.nome }}</td>
                                     <td>{{ motorista.telefone }}</td>
                                     <td>{{ motorista.data_cadastro|date:'d/m/Y' }}</td>
+                                    <td>
+                                        {% if motorista.documentos %}
+                                            <a href="{% url 'visualizar_documentos' motorista.id %}" target="_blank">Visualizar Documento</a>
+                                        {% else %}
+                                            Nenhum documento
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <i class="fa-solid fa-eye" data-bs-toggle="modal" data-bs-target="#exampleModal{{ motorista.id }}"></i>
                                         <!-- Modal -->
@@ -111,6 +126,13 @@
                                                         <p><strong>Nome:</strong> {{ motorista.nome }}</p>
                                                         <p><strong>Telefone:</strong> {{ motorista.telefone }}</p>
                                                         <p><strong>Data de Cadastro:</strong> {{ motorista.data_cadastro|date:'d/m/Y' }}</p>
+                                                        <p><strong>Documentos:</strong>
+                                                            {% if motorista.documentos %}
+                                                                <a href="{% url 'visualizar_documentos' motorista.id %}" target="_blank">Visualizar Documento</a>
+                                                            {% else %}
+                                                                <strong>Nenhum documento anexado.</strong>
+                                                            {% endif %}
+                                                        </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

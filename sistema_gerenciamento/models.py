@@ -70,6 +70,7 @@ class Motorista(models.Model):
     nome = models.CharField(max_length=40, null=False)
     telefone = models.CharField(max_length=15, null=False)
     data_cadastro = models.DateField(null=False)
+    documentos = models.FileField(upload_to='motoristas/documentos/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.nome}"

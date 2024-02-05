@@ -4,20 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ST-UFPI-login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     <style>
+        body {
+            background-image: url('https://img.freepik.com/vetores-gratis/vetor-de-fundo-gradiente-de-inverno-azul-e-rosa_53876-117276.jpg?w=1380&t=st=1707153390~exp=1707153990~hmac=39f750dae41254de41a02ffde43a92b0d8a0cadceae5c21372480ad3cbafc10f');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
         .container {
             padding-top: 150px;
-            font-size:14px;
+            font-size: 14px;
         }
     </style>
 
 </head>
 <body class="bg-secondary-subtle">
     <section class="container text-center">
-        <div class="card mx-auto my-5 shadow p-3 mb-5 bg-body-tertiary rounded" style="max-width: 20rem;">
-            <div class="card-body text-center fs-6">
+        <div class="card mx-auto my-5 shadow p-3 mb-5 bg-body-dark rounded " style="max-width: 20rem;">
+            <div class="card-body text-center fs-6 d-flex flex-column align-items-center">
+                <i class="fa-solid fa-circle-user fa-3x mb-4"></i>
                 <h2 class="card-title fw-bold">Login</h2>
                 <br>
                 <form method="post" autocomplete="off" action="{% url 'user_login' %}" class="mb-3">
@@ -33,18 +42,9 @@
                             {% endif %}
                         </div>
                     {% endfor %}
+                    <p><a href="{% url 'password_reset' %}">Esqueceu a senha?</a></p>
                     <button type="submit" class="btn btn-danger">Entrar</button>
                 </form>
-                {% if messages %}
-                    <div class="alert alert-danger" role="alert">
-                        <strong>Erro!<br> Corrija os seguintes problemas:</strong>
-                        <ul>
-                            {% for message in messages %}
-                                <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
 
                 <p>Não tem conta? <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="{% url 'cadastro' %}">
                   Cadastre-se
@@ -52,6 +52,26 @@
                 </p>
             </div>
         </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" role="alert">
+                    <strong>Erro!<br> Corrija os seguintes problemas:</strong>
+                        <ul>
+                            <li>{{ message }}</li>
+                        </ul>
+                    </div>
+                {% elif message.tags == 'success' %}
+                    <div class="alert alert-success" role="alert">
+                        <ul>
+                            <li>{{ message }}</li>
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

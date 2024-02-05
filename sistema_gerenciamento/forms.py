@@ -188,18 +188,20 @@ class ChecklistForm(forms.ModelForm):
 class MotoristasForm(forms.ModelForm):
     class Meta:
         model = Motorista
-        fields = ['nome', 'telefone', 'data_cadastro']
+        fields = ['nome', 'telefone', 'data_cadastro', 'documentos']
 
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'telefone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'xxxxxxxxxxx'}),
             'data_cadastro': forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'placeholder': 'dd/mm/aaaa'}),
+            'documentos': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
         labels = {
             'nome': 'Nome:',
             'telefone': 'Telefone:',
             'data_cadastro': 'Data de cadastro:',
+            'documentos': 'Documentos:'
         }
 
 
@@ -224,6 +226,21 @@ class MotoristasForm(forms.ModelForm):
         if data_cadastro and data_cadastro > timezone.now().date():
             raise forms.ValidationError('A data de cadastro não pode ser no futuro.')
         return data_cadastro
+
+    def clean_documentos(self):
+        documentos = self.cleaned_data.get('documentos')
+
+        # Verifica se é um arquivo PDF
+        if documentos:
+            if not documentos.name.endswith('.pdf'):
+                raise forms.ValidationError('Por favor, envie um arquivo PDF.')
+
+            # Verifica o tamanho do arquivo (por exemplo, limita a 5 MB)
+            max_size = 5 * 1024 * 1024  # 5 MB
+            if documentos.size > max_size:
+                raise forms.ValidationError('O arquivo PDF não pode exceder 5 MB.')
+
+        return documentos
 
 
 class RotaForm(forms.ModelForm):

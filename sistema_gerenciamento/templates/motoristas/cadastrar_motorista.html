@@ -16,9 +16,10 @@
 </head>
 <body>
     <nav class="navbar bg-dark" data-bs-theme="dark">
-        <div class="container-fluid">
+       <div class="container-fluid">
+
             <a class="link-light link-offset-2 link-underline link-underline-opacity-0" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                <i class="fa-solid fa-bars"></i> ST-UFPI
+                <i class="fa-solid fa-bars"></i>
             </a>
 
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -42,6 +43,12 @@
                 </div>
             </div>
 
+           <div>
+               <a href="{% url 'motoristas' %}" class="link-light link-offset-2 link-underline link-underline-opacity-0 ms-auto">
+                 <i class="fa-solid fa-arrow-left"></i> Voltar
+               </a>
+           </div>
+
             <div class="dropdown">
                 <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ user.username }}
@@ -59,7 +66,7 @@
             <div class="card-body text-center fs-6">
                 <h3 class="card-title">Cadastrar motorista</h3>
                 <br>
-                <form method="post" autocomplete="off" action="{% url 'cadastrar_motorista' %}">
+                <form method="post" autocomplete="off" action="{% url 'cadastrar_motorista' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
                     <div class="mb-3 row">

@@ -1,7 +1,8 @@
 from django.contrib.auth.hashers import make_password
+from django.core.exceptions import PermissionDenied
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, Http404, FileResponse
 from django.contrib.auth import authenticate, logout
 from django.contrib import messages
 from django.contrib.auth import login
@@ -304,7 +305,7 @@ def cadastrar_motorista(request):
         form = MotoristasForm
         return render(request, 'motoristas/cadastrar_motorista.html', {'form':form})
     else:
-        form = MotoristasForm(request.POST)
+        form = MotoristasForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('motoristas')
@@ -313,12 +314,23 @@ def cadastrar_motorista(request):
 
 
 @login_required(login_url="/auth/user_login/")
+def visualizar_documentos(request, motorista_id):
+    motorista = get_object_or_404(Motorista, pk=motorista_id)
+
+    if not motorista.documentos:
+        raise Http404("Documento não encontrado")
+
+    response = FileResponse(motorista.documentos.open('rb'))
+    return response
+
+
+@login_required(login_url="/auth/user_login/")
 @permission_required('sistema_gerenciamento.view_editar_motorista', raise_exception=True)
 def editar_motorista(request, motorista_id):
     motorista = get_object_or_404(Motorista, pk=motorista_id)
 
     if request.method == 'POST':
-        form = MotoristasForm(request.POST, instance=motorista)
+        form = MotoristasForm(request.POST, request.FILES, instance=motorista)
         if form.is_valid():
             form.save()
             return redirect('motoristas')
