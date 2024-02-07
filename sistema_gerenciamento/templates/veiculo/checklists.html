@@ -89,85 +89,87 @@
                     </div>
                     <br>
 
-                    <table class="table text-center table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Veículo</th>
-                                <th scope="col">Data</th>
-                                <th scope="col">Comprovante</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for checklist in checklist_list %}
-                            <tr>
-                                <th>{{ checklist.veiculo.modelo }}</th>
-                                <td>{{ checklist.data|date:'d/m/Y' }}</td>
-                                <td>
-                                    <a href="{% url 'view_comprovante_checklist' checklist.id %}" target="_blank">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <i class="fa-solid fa-eye" data-bs-toggle="modal" data-bs-target="#exampleModal{{ checklist.id }}"></i>
-                                    <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal{{ checklist.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
+                    <div class="table-responsive">
+                        <table class="table text-center table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Veículo</th>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Comprovante</th>
+                                    <th scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for checklist in checklist_list %}
+                                <tr>
+                                    <th>{{ checklist.veiculo.modelo }}</th>
+                                    <td>{{ checklist.data|date:'d/m/Y' }}</td>
+                                    <td>
+                                        <a href="{% url 'view_comprovante_checklist' checklist.id %}" target="_blank">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <i class="fa-solid fa-eye" data-bs-toggle="modal" data-bs-target="#exampleModal{{ checklist.id }}"></i>
+                                        <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal{{ checklist.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Detalhes do checklist</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p><strong>Veiculo:</strong> {{ checklist.veiculo.modelo }}</p>
+                                                            <p><strong>Data:</strong> {{ checklist.data|date:'d/m/Y' }}</p>
+                                                            <p><strong>Comprovante:</strong>
+                                                                <a href="{% url 'view_comprovante_checklist' checklist.id %}" target="_blank">
+                                                                    <i class="fa-solid fa-eye"></i>
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% if user_permissions.view_editar_checklist%}
+                                            <a href="{% url 'editar_checklist' checklist.id %}" class="link-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        {% endif %}
+
+                                        {% if user_permissions.view_deletar_checklist%}
+                                            <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deletar{{ checklist.id }}"></i>
+                                        {% endif %}
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="deletar{{ checklist.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalhes do checklist</h1>
+                                                        <h1 class="modal-title fs-5" id="aaa">Excluir checklist</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p><strong>Veiculo:</strong> {{ checklist.veiculo.modelo }}</p>
-                                                        <p><strong>Data:</strong> {{ checklist.data|date:'d/m/Y' }}</p>
-                                                        <p><strong>Comprovante:</strong>
-                                                            <a href="{% url 'view_comprovante_checklist' checklist.id %}" target="_blank">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </p>
+                                                        Tem certeza que deseja excluir o checklist do veículo '{{ checklist.veiculo.modelo }}' no dia '{{checklist.data|date:'d-m-Y'}}'?
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <!-- Utilize um formulário para enviar a solicitação de exclusão -->
+                                                        <form method="post" action="{% url 'deletar_checklist' checklist.id %}">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-danger">Deletar</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    {% if user_permissions.view_editar_checklist%}
-                                        <a href="{% url 'editar_checklist' checklist.id %}" class="link-dark"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    {% endif %}
-
-                                    {% if user_permissions.view_deletar_checklist%}
-                                        <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deletar{{ checklist.id }}"></i>
-                                    {% endif %}
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="deletar{{ checklist.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="aaa">Excluir checklist</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Tem certeza que deseja excluir o checklist do veículo '{{ checklist.veiculo.modelo }}' no dia '{{checklist.data|date:'d-m-Y'}}'?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                    <!-- Utilize um formulário para enviar a solicitação de exclusão -->
-                                                    <form method="post" action="{% url 'deletar_checklist' checklist.id %}">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-danger">Deletar</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>

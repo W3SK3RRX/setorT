@@ -87,6 +87,12 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
+                        <label for="solicitante" class="col-sm-3 col-form-label text-center fw-bold">Solicitante:</label>
+                        <div class="col-sm-8 mx-auto">
+                            {{ form.solicitante }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
                         <label for="data_saida" class="col-sm-3 col-form-label text-center fw-bold">Data de Saída:</label>
                         <div class="col-sm-8 mx-auto">
                             <input type="date" class="form-control" id="data_saida" name="data_saida" value="{{ viagem.data_saida|date:'Y-m-d' }}">
@@ -99,7 +105,7 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="descricao" class="col-sm-3 col-form-label text-center fw-bold">Descrição:</label>
+                        <label for="descricao" class="col-sm-3 col-form-label text-center fw-bold">Motivo:</label>
                         <div class="col-sm-8 mx-auto">
                             {{ form.descricao }}
                         </div>

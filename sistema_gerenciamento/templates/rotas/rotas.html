@@ -85,7 +85,7 @@
                         <h6 class="card-header">{{ rota.nome }} - {{ rota.turno }}</h6>
                         <div class="card-body">
                             <h5 class="card-title"></h5>
-                            <p class="card-text">Saída: {{rota.horario_saida}} / Chegada: {{rota.horario_retorno}}</p>
+                            <p class="card-text"><strong>Saída:</strong> {{rota.horario_saida}} / <strong>Chegada:</strong> {{rota.horario_retorno}}</p>
                             <div class="d-flex">
                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ rota.id }}">Detalhes</a>
 
@@ -128,10 +128,10 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Saída: {{rota.horario_saida}} / Chegada: {{rota.horario_retorno}}</p>
-                                            <p>Motorista: {{rota.motorista.nome}}</p>
-                                            <p>Veículo: {{rota.veiculo.modelo}}</p>
-                                            <p>Paradas:
+                                            <p><strong>Saída:</strong> {{rota.horario_saida}} / Chegada: {{rota.horario_retorno}}</p>
+                                            <p><strong>Motorista:</strong> {{rota.motorista.nome}}</p>
+                                            <p><strong>Veículo:</strong> {{rota.veiculo.modelo}}</p>
+                                            <p><strong>Paradas:</strong>
                                                 <ol>
                                                     {% for parada in rota.get_paradas_list %}
                                                         <li>{{ parada }}</li>

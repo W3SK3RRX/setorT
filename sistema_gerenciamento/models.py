@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import FileExtensionValidator
@@ -46,6 +48,12 @@ class Manutencao(models.Model):
         self.validate_image()
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        if self.comprovante_manutencao:
+            if os.path.isfile(self.comprovante_manutencao.path):
+                os.remove(self.comprovante_manutencao.path)
+        super().delete(*args, **kwargs)
+
 
 class Checklist(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -64,6 +72,12 @@ class Checklist(models.Model):
         self.validate_image()
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        if self.comprovante_checklist:
+            if os.path.isfile(self.comprovante_checklist.path):
+                os.remove(self.comprovante_checklist.path)
+        super().delete(*args, **kwargs)
+
 
 class Motorista(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -74,6 +88,12 @@ class Motorista(models.Model):
 
     def __str__(self):
         return f"{self.nome}"
+
+    def delete(self, *args, **kwargs):
+        if self.documentos:
+            if os.path.isfile(self.documentos.path):
+                os.remove(self.documentos.path)
+        super().delete(*args, **kwargs)
 
 
 class Rota(models.Model):
@@ -116,6 +136,12 @@ class Combustivel(models.Model):
         self.validate_image()
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        if self.comprovante_abastecimento:
+            if os.path.isfile(self.comprovante_abastecimento.path):
+                os.remove(self.comprovante_abastecimento.path)
+        super().delete(*args, **kwargs)
+
 
 class Demanda(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -137,6 +163,7 @@ class Viagem(models.Model):
     motorista = models.ForeignKey(Motorista, on_delete=models.CASCADE)
     data_saida = models.DateField(null=False)
     data_retorno = models.DateField(null=False)
+    solicitante = models.CharField(max_length=40, null=False, default="")
     descricao = models.TextField(max_length=100, null=False)
 
     def __str__(self):

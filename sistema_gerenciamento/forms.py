@@ -415,12 +415,13 @@ class DemandaForm(forms.ModelForm):
 class ViagemForm(forms.ModelForm):
     class Meta:
         model = Viagem
-        fields = ['destino', 'veiculo', 'motorista', 'data_saida', 'data_retorno', 'descricao']
+        fields = ['destino', 'veiculo', 'motorista', 'solicitante', 'data_saida', 'data_retorno', 'descricao']
 
         widgets = {
             'destino': forms.TextInput(attrs={'class': 'form-control'}),
             'veiculo': forms.Select(attrs={'class': 'form-control'}),
             'motorista': forms.Select(attrs={'class': 'form-control'}),
+            'solicitante': forms.TextInput(attrs={'class': 'form-control'}),
             'data_saida': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'data_retorno': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
@@ -430,9 +431,10 @@ class ViagemForm(forms.ModelForm):
             'destino': 'Destino:',
             'veiculo': 'Veículo:',
             'motorista': 'Motorista:',
+            'solicitante': 'Solicitante:',
             'data_saida': 'Data de Saída:',
             'data_retorno': 'Data de Retorno:',
-            'descricao': 'Descrição:',
+            'descricao': 'Motivo:',
         }
 
     def clean_data_retorno(self):

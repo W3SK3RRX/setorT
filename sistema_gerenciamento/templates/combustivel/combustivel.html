@@ -89,94 +89,97 @@
                     </div>
                     <br>
 
-                    <table class="table text-center table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Veículo</th>
-                                <th scope="col">Data</th>
-                                <th scope="col">Quantidade abastecida</th>
-                                <th scope="col">Custo</th>
-                                <th scope="col">Comprovante</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for abastecimento in abastecimentos_list %}
+                    <div class="table-responsive">
+                        <table class="table text-center table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{ abastecimento.veiculo.modelo }}</td>
-                                    <td>{{ abastecimento.data_cadastro|date:'d/m/Y' }}</td>
-                                    <td>{{ abastecimento.quantidade_abastecida }}L</td>
-                                    <td>R${{ abastecimento.custo }}</td>
-                                    <td>
-                                        <a href="{% url 'view_comprovante_abastecimento' abastecimento.id %}" target="_blank">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-
-                                        <i class="fa-solid fa-eye" data-bs-toggle="modal" data-bs-target="#exampleModal{{ abastecimento.id }}"></i>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal{{ abastecimento.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalhes do abastecimento</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p><strong>Veiculo:</strong> {{ abastecimento.veiculo.modelo }}</p>
-                                                        <p><strong>Data:</strong> {{ abastecimento.data_cadastro|date:'d/m/Y' }}</p>
-                                                        <p><strong>Quantidade abastecida:</strong> {{ abastecimento.quantidade_abastecida }}L</p>
-                                                        <p><strong>Custo:</strong> R${{ abastecimento.custo }}</p>
-                                                        <p><strong>Comprovante:</strong>
-                                                            <a href="{% url 'view_comprovante_abastecimento' abastecimento.id %}" target="_blank">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {% if user_permissions.view_editar_abastecimento %}
-                                            <a href="{% url 'editar_abastecimento' abastecimento.id %}" class="link-dark"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        {% endif %}
-
-                                        {% if user_permissions.view_deletar_abastecimento %}
-                                            <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deletar{{ abastecimento.id }}"></i>
-                                        {% endif %}
-
-                                        <div class="modal fade" id="deletar{{ abastecimento.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="aaa">Excluir abastecimento</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Tem certeza que deseja excluir o abastecimento do veículo '{{ abastecimento.veiculo.modelo }}' no dia '{{abastecimento.data_cadastro|date:'d-m-Y'}}'?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                        <!-- Utilize um formulário para enviar a solicitação de exclusão -->
-                                                        <form method="post" action="{% url 'deletar_abastecimento' abastecimento.id %}">
-                                                            {% csrf_token %}
-                                                            <button type="submit" class="btn btn-danger">Deletar</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </td>
+                                    <th scope="col">Veículo</th>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Quantidade abastecida</th>
+                                    <th scope="col">Custo</th>
+                                    <th scope="col">Comprovante</th>
+                                    <th scope="col">Ações</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for abastecimento in abastecimentos_list %}
+                                    <tr>
+                                        <td>{{ abastecimento.veiculo.modelo }}</td>
+                                        <td>{{ abastecimento.data_cadastro|date:'d/m/Y' }}</td>
+                                        <td>{{ abastecimento.quantidade_abastecida }}L</td>
+                                        <td>R${{ abastecimento.custo }}</td>
+                                        <td>
+                                            <a href="{% url 'view_comprovante_abastecimento' abastecimento.id %}" target="_blank">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+
+                                            <i class="fa-solid fa-eye" data-bs-toggle="modal" data-bs-target="#exampleModal{{ abastecimento.id }}"></i>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal{{ abastecimento.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Detalhes do abastecimento</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p><strong>Veiculo:</strong> {{ abastecimento.veiculo.modelo }}</p>
+                                                            <p><strong>Data:</strong> {{ abastecimento.data_cadastro|date:'d/m/Y' }}</p>
+                                                            <p><strong>Quantidade abastecida:</strong> {{ abastecimento.quantidade_abastecida }}L</p>
+                                                            <p><strong>Custo:</strong> R${{ abastecimento.custo }}</p>
+                                                            <p><strong>Comprovante:</strong>
+                                                                <a href="{% url 'view_comprovante_abastecimento' abastecimento.id %}" target="_blank">
+                                                                    <i class="fa-solid fa-eye"></i>
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {% if user_permissions.view_editar_abastecimento %}
+                                                <a href="{% url 'editar_abastecimento' abastecimento.id %}" class="link-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            {% endif %}
+
+                                            {% if user_permissions.view_deletar_abastecimento %}
+                                                <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deletar{{ abastecimento.id }}"></i>
+                                            {% endif %}
+
+                                            <div class="modal fade" id="deletar{{ abastecimento.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="aaa">Excluir abastecimento</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Tem certeza que deseja excluir o abastecimento do veículo '{{ abastecimento.veiculo.modelo }}' no dia '{{abastecimento.data_cadastro|date:'d-m-Y'}}'?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                            <!-- Utilize um formulário para enviar a solicitação de exclusão -->
+                                                            <form method="post" action="{% url 'deletar_abastecimento' abastecimento.id %}">
+                                                                {% csrf_token %}
+                                                                <button type="submit" class="btn btn-danger">Deletar</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>

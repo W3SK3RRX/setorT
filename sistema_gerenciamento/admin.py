@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Veiculo, Manutencao, Checklist, User, Motorista, Combustivel, Rota
+from .models import Veiculo, Manutencao, Checklist, User, Motorista, Combustivel, Rota, Viagem
 
 # Register your models here.
 admin.site.register(User)
@@ -10,3 +10,4 @@ admin.site.register(Checklist)
 admin.site.register(Motorista)
 admin.site.register(Combustivel)
 admin.site.register(Rota)
+admin.site.register(Viagem)
