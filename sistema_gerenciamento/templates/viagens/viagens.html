@@ -83,18 +83,27 @@
                 <div>
                     <br>
                     <div class="dropdown end">
-                        <h4>Viagens cadastradas</h4>
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Filtrar
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="?ordenacao=asc">Data de cadastro <i class="fa-solid fa-arrow-up"></i></a></li>
-                            <li><a class="dropdown-item" href="?ordenacao=desc">Data de cadastro <i class="fa-solid fa-arrow-down"></i></a></li>
-                        </ul>
+                        <h4 class="mb-3">Viagens cadastradas</h4>
+                        <form class="mb-3" method="GET">
+                            <label for="data_saida_filter" class="form-label"><strong>Filtrar por data:</strong></label>
+                            <div class="input-group input-group-sm">
+                                <input type="date" class="form-control" id="data_saida_filter" name="data_saida" value="{{ request.GET.data_saida }}">
+                                <button type="submit" class="btn btn-primary">Filtrar</button>
+                            </div>
+                        </form>
 
+                        <div class="dropdown mb-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Ordenar
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="?ordenacao=asc">Data de cadastro <i class="fa-solid fa-arrow-up ms-2"></i></a></li>
+                                <li><a class="dropdown-item" href="?ordenacao=desc">Data de cadastro <i class="fa-solid fa-arrow-down ms-2"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <br>
 
+                    <br>
                     <div class="table-responsive">
                         <table class="table text-center table-hover">
                             <thead>
@@ -103,6 +112,7 @@
                                     <th scope="col">Veículo</th>
                                     <th scope="col">Motorista</th>
                                     <th scope="col">Solicitante</th>
+                                    <th scope="col">Data de sáida</th>
                                     <th scope="col">Ações</th>
                                 </tr>
                             </thead>
@@ -113,6 +123,7 @@
                                         <td>{{ viagem.veiculo.modelo }}</td>
                                         <td>{{ viagem.motorista.nome }}</td>
                                         <td>{{ viagem.solicitante }}</td>
+                                        <td>{{ viagem.data_saida|date:'d/m/Y' }}</td>
                                         <td>
                                             <i class="fa-solid fa-eye" data-bs-toggle="modal" data-bs-target="#exampleModal{{ viagem.id }}"></i>
                                             <!-- Modal -->
@@ -130,7 +141,7 @@
                                                             <p><strong>Solicitante:</strong> {{viagem.solicitante}}</p>
                                                             <p><strong>Data de saída:</strong> {{ viagem.data_saida|date:'d/m/Y' }}</p>
                                                             <p><strong>Data de retorno:</strong> {{ viagem.data_retorno|date:'d/m/Y' }}</p>
-                                                            <p><strong>Motivo:</strong> {{ viagem.descricao }}</p>
+                                                            <p><strong>Justificativa:</strong> {{ viagem.descricao }}</p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

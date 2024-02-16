@@ -82,4 +82,8 @@ urlpatterns = [
     path('home/viagens/editar_viagem/<int:viagem_id>', editar_viagem, name="editar_viagem"),
     path('home/viagens/deletar_viagem/<int:viagem_id>', deletar_viagem, name="deletar_viagem"),
 
+
+    #Relatórios
+    path('home/dashboard', views.dashborad, name='dashboard')
+
 ]

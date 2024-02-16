@@ -531,10 +531,20 @@ def deletar_demanda(request, demanda_id):
     return redirect('demandas')
 
 
+from datetime import datetime
+
 @login_required(login_url="/auth/user_login/")
 def viagens(request):
     if request.method == 'GET':
         viagem_list = Viagem.objects.all()
+
+        # Verifique se há um parâmetro de pesquisa de data de saída
+        data_saida_filter = request.GET.get('data_saida', None)
+        if data_saida_filter:
+            # Converta a data fornecida pelo usuário para um objeto de data
+            data_saida_filter = datetime.strptime(data_saida_filter, '%Y-%m-%d').date()
+            # Filtrar viagens com a data de saída fornecida
+            viagem_list = viagem_list.filter(data_saida=data_saida_filter)
 
         ordenacao = request.GET.get('ordenacao', '')
         if ordenacao == 'asc':
@@ -588,3 +598,13 @@ def deletar_viagem(request, viagem_id):
     viagem = get_object_or_404(Viagem, pk=viagem_id)
     viagem.delete()
     return redirect('viagens')
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+
+#Relatórios
+
+def dashborad(request):
+    if request.method == "GET":
+        return render(request, 'dashboard/dashboard.html')
