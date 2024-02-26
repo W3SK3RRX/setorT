@@ -1,24 +1,37 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:15.6
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=setorT
+      - POSTGRES_USER=setorT
+      - POSTGRES_PASSWORD=setorT@2024$
     ports:
       - "5432:5432"
+    networks:
+      - network
+
   web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: ["./wait-for-it.sh", "db:5432", "--", "python", "manage.py", "migrate", "&&", "python", "manage.py", "runserver", "0.0.0.0:8000"]
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=setorT
+      - POSTGRES_USER=setorT
+      - POSTGRES_PASSWORD=setorT@2024$
     depends_on:
       - db
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
