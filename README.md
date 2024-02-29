@@ -42,7 +42,7 @@
     </li>
     <li><strong>Backup do banco de dados:</strong>
         <ul>
-            <li>O Crontab configura uma tarefa para executar django-admin dbbackup todos os dias às 3h00, caso quira realizar um backup manual utilizando o seguinte comando:
+            <li>O Crontab configura uma tarefa para executar django-admin dbbackup todos os dias às 3h00, caso queira realizar um backup manual utilize o seguinte comando:
                 <br>
                 <code>docker-compose run web python manage.py dbbackup</code>
             </li>
