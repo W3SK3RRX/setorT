@@ -16,4 +16,7 @@ venv/
 .env
 
 #migrações
-migrations/
+#migrations/
+
+#venv
+myenv/
