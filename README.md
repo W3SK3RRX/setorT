@@ -46,6 +46,10 @@
                 <br>
                 <code>docker-compose run web python manage.py dbbackup</code>
             </li>
+            <li>Para realizar a restauração do banco de dados utilize o seguinte comando:
+                <br>
+                <code>docker-compose run web python manage.py dbrestore /caminho/para/backup/db_backup_2022-01-01.gz</code>
+            </li>
         </ul>
     </li>
 </ol>
