@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-l*wmak3yw(752341ygo(bhd8klsj5!(+98v@**9$hu^%ueiors
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0"]
+ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
 
 # Application definition
 
@@ -147,3 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 os.environ['DBBACKUP_PG_DUMP'] = ''
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': 'backups/'}
+
+#Agendamento do backup do banco de dados
+CRONJOBS = [
+    ('0 3 * * *', 'django-admin dbbackup')
+]

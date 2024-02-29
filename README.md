@@ -40,4 +40,12 @@
             </li>
         </ul>
     </li>
+    <li><strong>Backup do banco de dados:</strong>
+        <ul>
+            <li>Isso configura uma tarefa para executar django-admin dbbackup todos os dias às 3h00, caso quira realizar um backup manual utilizando o seguinte comando:
+                <br>
+                <code>docker-compose run web python manage.py dbbackup</code>
+            </li>
+        </ul>
+    </li>
 </ol>

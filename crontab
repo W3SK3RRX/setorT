@@ -1,0 +1,2 @@
+# Executa o comando Django para realizar o backup diariamente às 3h00
+0 3 * * * root python /code/manage.py dbbackup
