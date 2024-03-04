@@ -12,7 +12,7 @@ urlpatterns = [
     path('cadastro/', views.cadastro, name='cadastro'),
     path('', views.user_login, name='user_login'),
     path('logout_user/', views.user_logout, name='logout_user'),
-    path('home/', views.home, name='home'),
+    path('home', views.home, name='home'),
 
 
     #recuperação de senha

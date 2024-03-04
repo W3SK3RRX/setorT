@@ -9,7 +9,7 @@ services:
     environment:
       - POSTGRES_DB=setorT
       - POSTGRES_USER=setorT
-      - POSTGRES_PASSWORD=setorT@2024$
+      - POSTGRES_PASSWORD='setorT@2024$'
     ports:
       - "5432:5432"
     networks:
