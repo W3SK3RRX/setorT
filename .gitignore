@@ -9,7 +9,6 @@ db.sqlite3
 
 # Diretórios de mídia e arquivos estáticos
 media/
-static/
 
 # Virtual environment
 venv/
