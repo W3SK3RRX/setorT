@@ -21,7 +21,7 @@ services:
       - ./scripts:/scripts
     depends_on:
       - db
-    command: sh -c "pg_dump -U setorT -d setorT -h db > /scripts/backup.sql"
+    command: sh -c "PGPASSWORD=setorT@2024CAFS pg_dump -U setorT -d setorT -h db > /scripts/backup.sql"
     networks:
       - network
 
