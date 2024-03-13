@@ -15,6 +15,16 @@ services:
     networks:
       - network
 
+  backup:
+    image: python:3
+    volumes:
+      - ./scripts:/scripts
+    depends_on:
+      - db
+    command: python /scripts/backups_db.py
+    networks:
+      - network
+
   web:
     container_name: web
     build: 
