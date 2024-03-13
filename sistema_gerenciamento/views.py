@@ -12,6 +12,9 @@ from .forms import (VeiculoForm, ManutencaoForm, ChecklistForm, CadastroForm, Lo
                     CombustivelForm, RotaForm, DemandaForm, ViagemForm)
 
 
+def handler404(request, exception):
+    return render(request, 'render_404.html')
+
 # Create your views here.
 def cadastro(request):
     if request.method == "GET":
