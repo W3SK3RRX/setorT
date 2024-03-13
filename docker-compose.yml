@@ -21,7 +21,7 @@ services:
       - ./scripts:/scripts
     depends_on:
       - db
-    command: python /scripts/backups_db.py
+    command: python /scripts/backup_db.py
     networks:
       - network
 
