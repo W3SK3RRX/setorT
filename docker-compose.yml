@@ -15,16 +15,6 @@ services:
     networks:
       - network
 
-  backup:
-    image: postgres:15.6
-    volumes:
-      - ./scripts:/scripts
-    depends_on:
-      - db
-    command: sh -c "PGPASSWORD=setorT@2024CAFS pg_dump -U setorT -d setorT -h db > /scripts/backup_db.sql"
-    networks:
-      - network
-
   web:
     container_name: web
     build: 
