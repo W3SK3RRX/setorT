@@ -42,13 +42,13 @@
     </li>
     <li><strong>Backup do banco de dados:</strong>
         <ul>
-            <li>O Crontab configura uma tarefa para executar django-admin dbbackup todos os dias às 3h00, caso queira realizar um backup manual utilize o seguinte comando:
+            <li>Configure o crontab para executar o script de backup todos os dias às 3h00, caso queira realizar um backup manual utilize o seguinte comando:
                 <br>
-                <code>docker-compose run web python manage.py dbbackup</code>
+                <p>Navegue até a pasta do projeto e execute:<code>./backup.sh</code></p>
             </li>
             <li>Para realizar a restauração do banco de dados utilize o seguinte comando:
                 <br>
-                <code>docker-compose run web python manage.py dbrestore /caminho/para/backup/db_backup_2022-01-01.gz</code>
+                <code>docker exec -i db psql -U setorT setorT < /caminho/para/o/arquivo/de/backup.sql</code>
             </li>
         </ul>
     </li>
