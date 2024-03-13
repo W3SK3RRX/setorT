@@ -2,7 +2,7 @@
 
 sleep 30
 
-backup_dir="/home/suporte/Documentos/backups_setorT"
+backup_dir="/home/suporte/Documentos/setorT/backups"
 
 backup_file="$backup_dir/backup_$(date +"%Y%m%d%H%M%S").sql"
 
