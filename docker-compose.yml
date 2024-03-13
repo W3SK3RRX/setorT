@@ -16,12 +16,12 @@ services:
       - network
 
   backup:
-    image: python:3
+    image: postgres:15.6
     volumes:
       - ./scripts:/scripts
     depends_on:
       - db
-    command: python /scripts/backup_db.py
+    command: sh -c "pg_dump -U setorT -d setorT -h db > /scripts/backup.sql"
     networks:
       - network
 
