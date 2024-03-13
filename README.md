@@ -42,9 +42,9 @@
     </li>
     <li><strong>Backup do banco de dados:</strong>
         <ul>
-            <li>Configure o crontab para executar o script de backup todos os dias às 3h00, caso queira realizar um backup manual utilize o seguinte comando:
+            <li>Configure o crontab para executar o script de backup todos os dias às 3h00, caso queira realizar um backup manual navegue até a pasta do projeto e utilize o seguinte comando:
                 <br>
-                <p>Navegue até a pasta do projeto e execute:<code>./backup.sh</code></p>
+                <code>./backup.sh</code>
             </li>
             <li>Para realizar a restauração do banco de dados utilize o seguinte comando:
                 <br>
