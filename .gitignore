@@ -8,7 +8,7 @@ __pycache__/
 db.sqlite3
 
 # Diretórios de mídia e arquivos estáticos
-media/
+#media/
 
 # Virtual environment
 venv/
