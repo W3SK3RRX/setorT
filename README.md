@@ -53,3 +53,6 @@
         </ul>
     </li>
 </ol>
+<h2>Documentação</h2>
+<p>Para ver a documentação navegue até a pasta docs na raiz do projeto e execute o seguinte comando:</p>
+<code>mkdocs serve</code>
