@@ -21,9 +21,12 @@
                     <p class="lead">
                         A página que você está procurando não existe.
                     </p>
-                    <a href="{% url 'home' %}" class="btn btn-primary">Go Home</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'home' %}" class="btn btn-primary">Go Home</a>
+                    {% else %}
+                        <a href="{% url 'login_user' %}" class="btn btn-primary">Login</a>
+                    {% endif %}
                 </div>
-
             </div>
         </div>
     </body>
