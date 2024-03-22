@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /home/suporte/documentos/setorT
+cd /home/suporte/Documentos/setorT
 docker-compose up -d
